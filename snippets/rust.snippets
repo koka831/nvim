@@ -1,0 +1,43 @@
+snippet fn "fn fname() {}"
+	fn ${1:fname}(${2}) ${3} {
+		${0}
+	}
+
+snippet pfn "pub fn fname() {}"
+	pub fn ${1:fname}(${2}) ${3} {
+		${0}
+	}
+
+snippet afn "async fn fname() {}"
+	async fn ${1:fname}(${2}) ${3} {
+		${0}
+	}
+
+snippet pafn "pub async fn fname() {}"
+	pub async fn ${1:fname}(${2}) ${3} {
+		${0}
+	}
+
+snippet new "constructor"
+	pub fn new(${2}) -> ${1:Self} {
+		$1 { ${3} }
+	}
+
+snippet pri "print!(..)" b
+	print!("$1"${2/..*/, /}$2);
+
+snippet pln "println!(..)" b
+	println!("$1"${2/..*/, /}$2);
+
+snippet fmt "format!(..)"
+	format!("$1"${2/..*/, /}$2);
+
+snippet .it ".iter()" i
+	.iter()$0
+
+snippet impl "Struct/Trait implementation" b
+	impl$4 ${1:Type/Trait}${2: for ${3:Type}}${4:<${5:T}>} {
+		${0}
+	}
+
+# vim:ft=snippets:
