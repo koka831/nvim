@@ -94,7 +94,10 @@ return {
                 removed = "Red",
               },
             },
-            "filename",
+            {
+              "filename",
+              path = 1,
+            },
           },
           lualine_x = { "filetype" },
           lualine_y = {
@@ -204,7 +207,7 @@ return {
     config = function()
       vim.cmd([[
       let g:silicon = {
-        \   'theme':        'gruvbox-dark',
+        \   'theme':        'gruvbox-light',
         \   'background':   '#32302f',
         \   'line-number':  v:true,
         \   'round-corner': v:true,
