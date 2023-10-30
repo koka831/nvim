@@ -113,6 +113,15 @@ vim.api.nvim_create_autocmd("ColorScheme", {
     highlight! link GitSignsChange      Yellow
     highlight! link GitSignsDelete      Red
     highlight! link GitSignsUntracked   Gray
+
+    " Neotest
+    highlight! link NeotestFailed       Red
+    highlight! link NeotestPassed       Aqua
+    highlight! link NeotestRunning      Yellow
+    highlight! link NeotestAdapterName  Blue
+    highlight! link NeotestDir          Green
+    highlight! link NeotestFile         White
+    highlight! link NeotestNamespace    Yellow
     ]])
 
     -- LSP
