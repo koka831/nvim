@@ -2,16 +2,15 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     event = "BufRead",
-    build = function()
-      require("nvim-treesitter.install").update({ with_sync = true })
-    end,
+    build = ":TSUpdate",
     config = function()
       require("nvim-treesitter.configs").setup({
         ensure_installed = "all",
+        ignore_install = { "dart" },
         highlight = {
           enable = true,
-          disable = { "yaml", "jack" },
-          additional_vim_regex_highlighting = { "yaml", "jack", "haskell" },
+          disable = { "yaml", "jack", "dart" },
+          additional_vim_regex_highlighting = { "yaml", "jack", "haskell", "dart" },
         },
         indent = { enable = true },
         -- windwp/nvim-ts-autotag
