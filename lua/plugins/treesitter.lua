@@ -9,14 +9,12 @@ return {
         ignore_install = { "dart" },
         highlight = {
           enable = true,
-          disable = { "yaml", "jack", "dart" },
+          disable = { "yaml", "jack" },
           additional_vim_regex_highlighting = { "yaml", "jack", "haskell", "dart" },
         },
         indent = { enable = true },
         -- windwp/nvim-ts-autotag
         autotag = { enable = true },
-        -- JoosepAlviste/nvim-ts-context-commentstring
-        context_commentstring = { enable = true },
         -- nvim-treesitter-textobjects
         textobjects = {
           select = { enable = true },
@@ -33,6 +31,9 @@ return {
     "JoosepAlviste/nvim-ts-context-commentstring",
     event = "BufRead",
     dependencies = "tpope/vim-commentary",
+    config = function()
+      require("ts_context_commentstring").setup()
+    end,
   },
   {
     "windwp/nvim-ts-autotag",

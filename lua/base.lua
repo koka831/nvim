@@ -1,6 +1,8 @@
 -- @see https://github.com/nvim-tree/nvim-tree.lua#setup
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
+-- https://github.com/JoosepAlviste/nvim-ts-context-commentstring#getting-started
+vim.g.skip_ts_context_commentstring_module = true
 
 vim.cmd([[
 set termguicolors
