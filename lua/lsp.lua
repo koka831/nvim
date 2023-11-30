@@ -100,6 +100,10 @@ require("rust-tools").setup({
   },
 })
 
+require("flutter-tools").setup({
+  fvm = true,
+})
+
 local ls = require("null-ls")
 local builtins = ls.builtins
 
