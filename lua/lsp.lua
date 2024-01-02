@@ -124,9 +124,9 @@ ls.setup({
     -- C++
     builtins.formatting.clang_format,
     -- ECMAScript
-    builtins.formatting.eslint_d.with({ condition = has_eslintrc }),
-    builtins.diagnostics.eslint_d.with({ condition = has_eslintrc }),
-    builtins.code_actions.eslint_d.with({ condition = has_eslintrc }),
+    builtins.formatting.eslint.with({ condition = has_eslintrc }),
+    builtins.diagnostics.eslint.with({ condition = has_eslintrc }),
+    builtins.code_actions.eslint.with({ condition = has_eslintrc }),
     -- GHA
     builtins.diagnostics.actionlint,
     -- Python
