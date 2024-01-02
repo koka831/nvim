@@ -127,6 +127,8 @@ ls.setup({
     builtins.formatting.eslint.with({ condition = has_eslintrc }),
     builtins.diagnostics.eslint.with({ condition = has_eslintrc }),
     builtins.code_actions.eslint.with({ condition = has_eslintrc }),
+
+    builtins.formatting.prettier,
     -- GHA
     builtins.diagnostics.actionlint,
     -- Python
