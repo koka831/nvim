@@ -120,7 +120,7 @@ ls.setup({
     builtins.code_actions.shellcheck,
     -- Lua
     builtins.formatting.stylua,
-    builtins.diagnostics.luacheck.with({ extra_args = { "--globals", "vim" } }),
+    builtins.diagnostics.selene,
     -- C++
     builtins.formatting.clang_format,
     -- ECMAScript
