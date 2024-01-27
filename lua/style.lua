@@ -78,6 +78,7 @@ vim.api.nvim_create_autocmd("ColorScheme", {
     highlight! link @namespace          White
     highlight! link @field              White
     highlight! link @variable           White
+    highlight! link @variable.member    White
     highlight! link @property           White
     highlight! link @operator           White
     highlight! link @function.call      Green
@@ -107,6 +108,8 @@ vim.api.nvim_create_autocmd("ColorScheme", {
 
     " Plugin settings
     highlight! link NvimTreeWindowPicker PmenuSel
+    highlight! link NvimTreeWinSeparator VertSplit
+    highlight! link NvimTreeGitDirtyIcon Yellow
 
     " GitGutter
     highlight! link GitSignsAdd         Aqua
