@@ -85,6 +85,8 @@ vim.api.nvim_create_autocmd("ColorScheme", {
     highlight! link @function.builtin   Green
     highlight! link @function.macro     Blue
 
+    highlight! link @variable.member.ruby    Purple
+
     highlight! link @text.note          BgAqua
     highlight! link @text.warning       BgYellow
     highlight! link @text.danger        BgRed
