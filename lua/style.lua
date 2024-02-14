@@ -76,6 +76,7 @@ vim.api.nvim_create_autocmd("ColorScheme", {
     highlight! link @text.literal       Aqua
     highlight! link @text.reference     Blue
     highlight! link @namespace          White
+    highlight! link @module             White
     highlight! link @field              White
     highlight! link @variable           White
     highlight! link @variable.member    White
@@ -92,6 +93,9 @@ vim.api.nvim_create_autocmd("ColorScheme", {
     highlight! link @text.danger        BgRed
     highlight! link @text.todo.comment  BgGreen
     highlight! link @text.safety        BgGray
+    highlight! link TSNote              BgAqua
+    highlight! link TSWarning           BgYellow
+    highlight! link TSDanger            BgRed
 
     highlight! link @text.title.1.markdown          Red
     highlight! link @text.title.2.markdown          Yellow
@@ -106,6 +110,7 @@ vim.api.nvim_create_autocmd("ColorScheme", {
     highlight! link @keyword.luadoc         Purple
     highlight! link @keyword.return.luadoc  Purple
     highlight! link @namespace.crate.rust   Red
+    highlight! link @path.qualifier.super   Blue
     highlight! @comment.documentation       gui=bold
 
     " Plugin settings

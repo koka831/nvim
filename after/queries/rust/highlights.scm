@@ -8,3 +8,8 @@
 ((tuple_struct_pattern
    (identifier) @type.qualifier.box)
     (#eq? @type.qualifier.box "box"))
+
+;; module(super)
+; ((use_declaration)
+ ((scoped_identifier
+  (super) @path.qualifier.super))
