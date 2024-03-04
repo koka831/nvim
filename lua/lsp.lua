@@ -56,6 +56,13 @@ lspconfig.pyright.setup({
   end,
 })
 
+lspconfig.ruff_lsp.setup({
+  capabilities = capabilities,
+  on_init = function(client)
+    client.config.settings.python.pythonPath = python_path(client.config.root_dir)
+  end,
+})
+
 require("rust-tools").setup({
   tools = {
     inlay_hints = {
@@ -107,33 +114,26 @@ require("flutter-tools").setup({
 local ls = require("null-ls")
 local builtins = ls.builtins
 
-local function has_eslintrc(util)
-  return util.root_has_file({ "eslint.config.js", ".eslintrc.js" })
-end
-
 ls.setup({
   capabilities = capabilities,
   diagnostics_format = "#{m} (#{s}: #{c})",
   sources = {
     -- Shell
-    builtins.diagnostics.shellcheck,
-    builtins.code_actions.shellcheck,
+    require("none-ls-shellcheck.diagnostics"),
+    require("none-ls-shellcheck.code_actions"),
     -- Lua
     builtins.formatting.stylua,
     builtins.diagnostics.selene,
     -- C++
     builtins.formatting.clang_format,
     -- ECMAScript
-    builtins.formatting.eslint.with({ condition = has_eslintrc }),
-    builtins.diagnostics.eslint.with({ condition = has_eslintrc }),
-    builtins.code_actions.eslint.with({ condition = has_eslintrc }),
+    require("none-ls.formatting.eslint"),
+    require("none-ls.diagnostics.eslint"),
+    require("none-ls.code_actions.eslint"),
 
     builtins.formatting.prettier,
     -- GHA
     builtins.diagnostics.actionlint,
-    -- Python
-    builtins.formatting.ruff,
-    builtins.diagnostics.ruff,
   },
 })
 
