@@ -9,8 +9,7 @@ return {
         ignore_install = { "dart" },
         highlight = {
           enable = true,
-          disable = { "yaml", "jack" },
-          additional_vim_regex_highlighting = { "yaml", "jack", "haskell", "dart" },
+          additional_vim_regex_highlighting = { "jack", "haskell", "dart" },
         },
         indent = { enable = true },
         -- windwp/nvim-ts-autotag

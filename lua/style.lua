@@ -111,6 +111,8 @@ vim.api.nvim_create_autocmd("ColorScheme", {
     highlight! link @keyword.return.luadoc  Purple
     highlight! link @namespace.crate.rust   Red
     highlight! link @path.qualifier.super   Blue
+    highlight! link @property.yaml          Yellow
+    highlight! link @string.yaml            White
     highlight! @comment.documentation       gui=bold
 
     " Plugin settings
