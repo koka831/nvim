@@ -63,6 +63,8 @@ lspconfig.ruff_lsp.setup({
   end,
 })
 
+lspconfig.terraformls.setup({})
+
 require("rust-tools").setup({
   tools = {
     inlay_hints = {
@@ -134,6 +136,10 @@ ls.setup({
     builtins.formatting.prettier,
     -- GHA
     builtins.diagnostics.actionlint,
+    -- Terraform
+    builtins.formatting.terraform_fmt,
+    builtins.diagnostics.terraform_validate,
+    builtins.diagnostics.trivy,
   },
 })
 
