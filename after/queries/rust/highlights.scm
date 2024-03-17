@@ -1,3 +1,4 @@
+;; inherits: rust
 ;; extends
 
 ((crate) @namespace.crate @nospell)
@@ -10,6 +11,10 @@
     (#eq? @type.qualifier.box "box"))
 
 ;; module(super)
-; ((use_declaration)
  ((scoped_identifier
   (super) @path.qualifier.super))
+
+;; pub
+((visibility_modifier) @keyword.modifier.pub
+ (#eq? @keyword.modifier.pub "pub")
+ (#set! "priority" 100))

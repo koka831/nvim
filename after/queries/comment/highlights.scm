@@ -3,6 +3,6 @@
 
 ; highlight `SAFETY` keyword in comment (for Rust)
 ((tag
-  (name) @text.safety @nospell
+  (name) @text.safety @spell
   ( "(" (user) ")" )? ":" )
   (#eq? @text.safety "SAFETY"))

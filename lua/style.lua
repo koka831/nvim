@@ -88,14 +88,14 @@ vim.api.nvim_create_autocmd("ColorScheme", {
 
     highlight! link @variable.member.ruby    Purple
 
-    highlight! link @text.note          BgAqua
-    highlight! link @text.warning       BgYellow
-    highlight! link @text.danger        BgRed
-    highlight! link @text.todo.comment  BgGreen
-    highlight! link @text.safety        BgGray
-    highlight! link TSNote              BgAqua
-    highlight! link TSWarning           BgYellow
-    highlight! link TSDanger            BgRed
+    highlight! link @text.note              BgAqua
+    highlight! link @text.warning           BgYellow
+    highlight! link @text.danger            BgRed
+    highlight! link @text.todo.comment      BgGreen
+    highlight! link @text.safety.comment    BgGray
+    highlight! link TSNote                  BgAqua
+    highlight! link TSWarning               BgYellow
+    highlight! link TSDanger                BgRed
 
     highlight! link @text.title.1.markdown          Red
     highlight! link @text.title.2.markdown          Yellow
@@ -110,7 +110,9 @@ vim.api.nvim_create_autocmd("ColorScheme", {
     highlight! link @keyword.luadoc         Purple
     highlight! link @keyword.return.luadoc  Purple
     highlight! link @keyword.modifier.rust  Orange
+    highlight! link @keyword.modifier.pub   Red
     highlight! link @attribute.rust         Orange
+    highlight! link @attribute.builtin.rust Orange
     highlight! link @namespace.crate.rust   Red
     highlight! link @path.qualifier.super   Blue
     highlight! link @property.yaml          Yellow
