@@ -30,6 +30,5 @@ set foldexpr=nvim_treesitter#foldexpr()
 set inccommand=split
 set pumblend=10
 set winblend=10
-
 set signcolumn=yes
 ]])
