@@ -41,6 +41,7 @@ vim.api.nvim_create_autocmd("ColorScheme", {
     highlight! link IncSearch   BgYellow
     highlight! link CurSearch   BgRed
     highlight! link MatchParen  BgGray
+    highlight! link Directory   Aqua
 
     " remove undercurl from diagnostics text
     highlight! ErrorText      gui=none
