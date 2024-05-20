@@ -14,6 +14,4 @@ return {
   -- lua
   "nvim-lua/plenary.nvim",
   "nvim-lua/popup.nvim",
-  -- comment
-  "tpope/vim-commentary",
 }
