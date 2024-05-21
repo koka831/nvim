@@ -152,6 +152,15 @@ vim.api.nvim_create_autocmd("LspAttach", {
   end,
 })
 
+-- Enable inlay hint in normal mode
+vim.api.nvim_create_autocmd({ "LspAttach", "InsertEnter", "InsertLeave" }, {
+  group = vim.api.nvim_create_augroup("ToggleInlayHint", {}),
+  callback = function(ev)
+    local mode = ev.event ~= "InsertEnter"
+    vim.lsp.inlay_hint.enable(mode, { bufnr = ev.buf })
+  end,
+})
+
 -- Highlight variables under the cursor
 -- TODO: Check if the current LSP supports document highlighting
 -- ref: `client.supports_method('textDocument/documentHighlight')`
