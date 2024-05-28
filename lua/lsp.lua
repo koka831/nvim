@@ -111,6 +111,12 @@ require("rust-tools").setup({
 
 require("flutter-tools").setup({
   fvm = true,
+  lsp = {
+    capabilities = capabilities,
+    settings = {
+      lineLength = 120,
+    },
+  },
 })
 
 local ls = require("null-ls")
