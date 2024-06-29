@@ -21,6 +21,10 @@ lspconfig.lua_ls.setup({
   },
 })
 
+lspconfig.gopls.setup({
+  capabilities = capabilities,
+})
+
 lspconfig.hls.setup({
   capabilities = capabilities,
   settings = {
