@@ -49,6 +49,11 @@ vim.api.nvim_create_autocmd("ColorScheme", {
     highlight! InfoText       gui=none
     highlight! HintText       gui=none
 
+    highlight! DiagnosticUnderlineError gui=none
+    highlight! DiagnosticUnderlineWarn  gui=none
+    highlight! DiagnosticUnderlineInfo  gui=none
+    highlight! DiagnosticUnderlineHint  gui=none
+
     " code highlight in previewer
     highlight! link Type                Yellow
     highlight! link Special             Yellow
