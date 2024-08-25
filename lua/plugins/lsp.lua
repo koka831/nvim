@@ -22,11 +22,6 @@ return {
     dependencies = "neovim/nvim-lspconfig",
   },
   {
-    "simrat39/rust-tools.nvim",
-    ft = "rust",
-    dependencies = "nvim-lua/plenary.nvim",
-  },
-  {
     "akinsho/flutter-tools.nvim",
     ft = "dart",
     dependencies = "nvim-lua/plenary.nvim",

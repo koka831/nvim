@@ -73,48 +73,25 @@ lspconfig.ruff_lsp.setup({
 
 lspconfig.terraformls.setup({})
 
-require("rust-tools").setup({
-  tools = {
-    inlay_hints = {
-      auto = true,
-      parameter_hints_prefix = " ",
-      other_hints_prefix = "-> ",
-    },
-    dap = {
-      adapter = require("rust-tools.dap").get_codelldb_adapter(
-        "/usr/bin/codelldb",
-        "/lib/codelldb/adapter/libcodelldb.so"
-      ),
-    },
-    hover_actions = {
-      -- remove borders
-      border = {
-        { " ", "FloatBorder" },
-        { " ", "FloatBorder" },
-        { " ", "FloatBorder" },
-        { " ", "FloatBorder" },
-        { " ", "FloatBorder" },
-        { " ", "FloatBorder" },
-        { " ", "FloatBorder" },
-        { " ", "FloatBorder" },
-      },
-    },
+lspconfig.rust_analyzer.setup({
+  capabilities = capabilities,
+  on_attach = function(client, bufnr)
+    if client.server_capabilities.inlayHintProvider then
+      vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+    end
+  end,
+  check = {
+    command = "clippy",
+    extraArgs = { "--all", "--", "-W", "clippy::all" },
   },
-  server = {
-    capabilities = capabilities,
-    settings = {
-      ["rust-analyzer"] = {
-        check = {
-          command = "clippy",
-          extraArgs = { "--all", "--", "-W", "clippy::all" },
-        },
-        inlayHints = { locationLinks = false },
-        rustc = {
-          source = "discover",
-        },
-      },
-    },
+  inlayHints = {
+    parameterHints = { enable = false },
+    typeHints = { enable = false },
   },
+  -- for clippy
+  -- rustc = {
+  --   source = "discover",
+  -- },
 })
 
 require("flutter-tools").setup({
