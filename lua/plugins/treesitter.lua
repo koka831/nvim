@@ -29,7 +29,6 @@ return {
   {
     "JoosepAlviste/nvim-ts-context-commentstring",
     event = "BufRead",
-    dependencies = "tpope/vim-commentary",
     config = function()
       require("ts_context_commentstring").setup()
     end,

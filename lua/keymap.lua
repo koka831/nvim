@@ -7,8 +7,6 @@ keymap("i", "<C-k>", "<Up>")
 keymap("i", "<C-l>", "<Right>")
 
 keymap("n", "<C-p>", ":bp<cr>")
-keymap("n", "<C-_>", ":Commentary<cr>")
-keymap("n", "<C-/>", ":Commentary<cr>")
 keymap("n", "<C-n>", require("nvim-tree.api").tree.toggle)
 
 -- telescope
