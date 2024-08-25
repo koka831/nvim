@@ -25,6 +25,10 @@ lspconfig.gopls.setup({
   capabilities = capabilities,
 })
 
+lspconfig.nil_ls.setup({
+  capabilities = capabilities,
+})
+
 lspconfig.hls.setup({
   capabilities = capabilities,
   settings = {
