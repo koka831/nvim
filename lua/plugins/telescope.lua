@@ -1,7 +1,28 @@
+local function format_filename(_, path)
+  local fname = vim.fs.basename(path)
+  local directory = vim.fs.dirname(path)
+
+  if directory == "." then
+    return fname
+  end
+
+  return string.format("%s\t\t%s", fname, directory)
+end
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "TelescopeResults",
+  callback = function(ev)
+    vim.api.nvim_buf_call(ev.buf, function()
+      vim.fn.matchadd("TelescopeDirectory", "\t\t.*$")
+      vim.api.nvim_set_hl(0, "TelescopeDirectory", { link = "Comment" })
+    end)
+  end,
+})
+
 return {
   {
     "nvim-telescope/telescope.nvim",
-    tag = "0.1.4",
+    tag = "0.1.8",
     lazy = true,
     dependencies = {
       "nvim-lua/plenary.nvim",
@@ -17,6 +38,7 @@ return {
               ["<esc>"] = require("telescope.actions").close,
             },
           },
+          path_display = format_filename,
           vimgrep_arguments = {
             "rg",
             "--with-filename",

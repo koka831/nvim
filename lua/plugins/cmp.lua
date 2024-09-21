@@ -82,4 +82,17 @@ return {
     event = "InsertEnter",
   },
   "onsails/lspkind-nvim",
+  {
+    "github/copilot.vim",
+    event = "InsertEnter",
+  },
+  {
+    "CopilotC-Nvim/CopilotChat.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "github/copilot.vim",
+    },
+    build = "make tiktoken",
+    branch = "canary",
+  },
 }
