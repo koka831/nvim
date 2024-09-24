@@ -111,6 +111,11 @@ vim.api.nvim_create_autocmd("ColorScheme", {
     highlight! link @text.title.2.marker.markdown   Yellow
     highlight! link @text.title.3.marker.markdown   Aqua
     highlight! link @text.title.4.marker.markdown   Green
+    highlight! link markdownH1      Red
+    highlight! link markdownH2      Yellow
+    highlight! link markdownH3      Aqua
+    highlight! link markdownH4      Green
+
 
     highlight! link @function.builtin.lua   Blue
     highlight! link @keyword.luadoc         Purple
