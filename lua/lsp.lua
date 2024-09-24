@@ -64,6 +64,17 @@ lspconfig.pyright.setup({
   end,
 })
 
+lspconfig.biome.setup({
+  capabilities = capabilities,
+})
+
+lspconfig.ts_ls.setup({
+  capabilities = capabilities,
+  on_attach = function(client, _)
+    client.server_capabilities.documentFormattingProvider = false
+  end,
+})
+
 lspconfig.ruff_lsp.setup({
   capabilities = capabilities,
   on_init = function(client)
@@ -84,14 +95,15 @@ lspconfig.rust_analyzer.setup({
     command = "clippy",
     extraArgs = { "--all", "--", "-W", "clippy::all" },
   },
-  inlayHints = {
-    parameterHints = { enable = false },
-    typeHints = { enable = false },
+  settings = {
+    rust_analyzer = {
+      inlayHints = {
+        closingBraceHints = { enable = false },
+        parameterHints = { enable = false },
+        typeHints = { enable = false },
+      },
+    },
   },
-  -- for clippy
-  -- rustc = {
-  --   source = "discover",
-  -- },
 })
 
 require("flutter-tools").setup({
@@ -119,12 +131,6 @@ ls.setup({
     builtins.diagnostics.selene,
     -- C++
     builtins.formatting.clang_format,
-    -- ECMAScript
-    require("none-ls.formatting.eslint"),
-    require("none-ls.diagnostics.eslint"),
-    require("none-ls.code_actions.eslint"),
-
-    builtins.formatting.prettier,
     -- GHA
     builtins.diagnostics.actionlint,
     -- Terraform
