@@ -96,11 +96,16 @@ lspconfig.rust_analyzer.setup({
     extraArgs = { "--all", "--", "-W", "clippy::all" },
   },
   settings = {
-    rust_analyzer = {
+    ["rust-analyzer"] = {
       inlayHints = {
+        renderColons = true,
+        expressionAdjustmentHints = { enable = true },
         closingBraceHints = { enable = false },
         parameterHints = { enable = false },
-        typeHints = { enable = false },
+        typeHints = {
+          enable = false,
+          -- hideNamedConstructor = true,
+        },
       },
     },
   },
