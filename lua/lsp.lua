@@ -75,7 +75,7 @@ lspconfig.ts_ls.setup({
   end,
 })
 
-lspconfig.ruff_lsp.setup({
+lspconfig.ruff.setup({
   capabilities = capabilities,
   on_init = function(client)
     client.config.settings.python.pythonPath = python_path(client.config.root_dir)
