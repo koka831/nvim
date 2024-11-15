@@ -39,6 +39,11 @@ lspconfig.hls.setup({
   },
 })
 
+-- require `npm install -g @tailwindcss/language-server`
+require("lspconfig").tailwindcss.setup({
+  capabilities = capabilities,
+})
+
 ---@param workspace string path
 ---@return string
 local function python_path(workspace)
