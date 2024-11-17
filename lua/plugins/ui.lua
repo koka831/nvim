@@ -207,7 +207,7 @@ return {
     config = function()
       vim.cmd([[
       let g:silicon = {
-        \   'theme':        'gruvbox-light',
+        \   'theme':        'gruvbox-dark',
         \   'background':   '#32302f',
         \   'line-number':  v:true,
         \   'round-corner': v:true,
