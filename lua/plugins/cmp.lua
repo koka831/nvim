@@ -93,6 +93,6 @@ return {
       "github/copilot.vim",
     },
     build = "make tiktoken",
-    branch = "canary",
+    branch = "main",
   },
 }
