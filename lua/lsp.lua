@@ -29,6 +29,13 @@ lspconfig.nil_ls.setup({
   capabilities = capabilities,
 })
 
+lspconfig.ruby_lsp.setup({
+  capabilities = capabilities,
+  init_options = {
+    formatter = "rubocop",
+  },
+})
+
 lspconfig.hls.setup({
   capabilities = capabilities,
   settings = {
