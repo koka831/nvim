@@ -6,10 +6,9 @@ return {
     config = function()
       require("nvim-treesitter.configs").setup({
         ensure_installed = "all",
-        ignore_install = { "dart" },
         highlight = {
           enable = true,
-          additional_vim_regex_highlighting = { "jack", "haskell", "dart" },
+          additional_vim_regex_highlighting = { "jack", "haskell" },
         },
         indent = { enable = true },
         -- windwp/nvim-ts-autotag
