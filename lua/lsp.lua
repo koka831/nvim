@@ -33,6 +33,7 @@ lspconfig.ruby_lsp.setup({
   capabilities = capabilities,
   init_options = {
     formatter = "rubocop",
+    linters = { "rubocop", "standard" },
   },
 })
 
