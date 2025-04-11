@@ -11,6 +11,8 @@ vim.api.nvim_create_autocmd("ColorScheme", {
       highlight! Gray   guifg=#473c29
       highlight! Normal guibg=#282828
 
+      highlight! GrayBold   guifg=#928376 gui=bold
+
       highlight! BgRed      guifg=#282828 guibg=#f55e5e gui=bold
       highlight! BgYellow   guifg=#282828 guibg=#f5a95e gui=bold
       highlight! BgAqua     guifg=#282828 guibg=#a8a85f gui=bold
@@ -128,7 +130,7 @@ vim.api.nvim_create_autocmd("ColorScheme", {
     highlight! link @path.qualifier.super   Blue
     highlight! link @property.yaml          Yellow
     highlight! link @string.yaml            White
-    highlight! @comment.documentation       gui=bold
+    highlight! link @comment.documentation  GrayBold
 
     " Plugin settings
     highlight! link NvimTreeWindowPicker PmenuSel
