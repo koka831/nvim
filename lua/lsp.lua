@@ -1,25 +1,33 @@
 --- Keybinds for LSP are also configured in `keymap.lua`.
-local c = vim.lsp.protocol.make_client_capabilities()
-local capabilities = require("cmp_nvim_lsp").default_capabilities(c)
 local lspconfig = require("lspconfig")
 
-require("mason-lspconfig").setup_handlers({
-  function(ls)
-    lspconfig[ls].setup({ capabilities = capabilities })
-  end,
+require("mason-lspconfig").setup({})
+
+local c = vim.lsp.protocol.make_client_capabilities()
+local capabilities = require("cmp_nvim_lsp").default_capabilities(c)
+vim.lsp.config("*", {
+  capabilities = capabilities,
 })
 
-lspconfig.lua_ls.setup({
-  capabilities = capabilities,
+vim.lsp.config("lua_ls", {
   settings = {
     Lua = {
       diagnostics = {
         globals = { "vim" },
       },
+      workspace = {
+        library = vim.list_extend(vim.api.nvim_get_runtime_file("lua", true), {
+          "${3rd}/luv/library",
+          "${3rd}/busted/library",
+          "${3rd}/luassert/library",
+        }),
+        checkThirdParty = "Disable",
+      },
       telemetry = { enable = false },
     },
   },
 })
+vim.lsp.enable("lua_ls")
 
 lspconfig.gopls.setup({
   capabilities = capabilities,
@@ -77,9 +85,23 @@ lspconfig.pyright.setup({
   end,
 })
 
-lspconfig.biome.setup({
-  capabilities = capabilities,
+---detect which package manager is used in the current JS/TS project
+---@return string package_manager one of "pnpm", "yarn" "npm"
+local function node_package_manager()
+  local cwd = vim.fn.getcwd()
+  if vim.fn.filereadable(cwd .. "/pnpm-lock.yaml") == 1 then
+    return "pnpm"
+  elseif vim.fn.filereadable(cwd .. "/yarn.lock") == 1 then
+    return "yarn"
+  else
+    return "npm"
+  end
+end
+
+vim.lsp.config("biome", {
+  cmd = { node_package_manager(), "biome", "lsp-proxy" },
 })
+vim.lsp.enable("biome")
 
 lspconfig.ts_ls.setup({
   capabilities = capabilities,
@@ -104,15 +126,17 @@ lspconfig.rust_analyzer.setup({
       vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
     end
   end,
-  check = {
-    command = "clippy",
-    extraArgs = { "--all", "--", "-W", "clippy::all" },
-  },
   settings = {
     ["rust-analyzer"] = {
+      check = {
+        extraArgs = { "--target-dir", "target/ra" },
+        -- command = "clippy",
+        -- TODO: enable --target-dir
+        -- extraArgs = { "--all", "--", "-W", "clippy::all", "--target-dir", "target/ra" },
+      },
       inlayHints = {
         renderColons = true,
-        expressionAdjustmentHints = { enable = true },
+        -- expressionAdjustmentHints = { enable = true },
         closingBraceHints = { enable = false },
         parameterHints = { enable = false },
         typeHints = {
@@ -144,6 +168,7 @@ ls.setup({
     -- Shell
     require("none-ls-shellcheck.diagnostics"),
     require("none-ls-shellcheck.code_actions"),
+    builtins.formatting.prettierd,
     -- Lua
     builtins.formatting.stylua,
     builtins.diagnostics.selene,
