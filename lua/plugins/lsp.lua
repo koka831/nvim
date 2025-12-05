@@ -2,26 +2,6 @@
 return {
   "neovim/nvim-lspconfig",
   {
-    "williamboman/mason.nvim",
-    dependencies = "neovim/nvim-lspconfig",
-    config = function()
-      require("mason").setup({
-        ui = {
-          icons = {
-            package_installed = "✓",
-            package_pending = "➜",
-            package_uninstalled = "✗",
-          },
-        },
-      })
-    end,
-  },
-  {
-    "williamboman/mason-lspconfig.nvim",
-    event = "BufReadPre",
-    dependencies = "neovim/nvim-lspconfig",
-  },
-  {
     "akinsho/flutter-tools.nvim",
     ft = "dart",
     dependencies = "nvim-lua/plenary.nvim",

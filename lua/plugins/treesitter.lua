@@ -1,29 +1,18 @@
 return {
   {
     "nvim-treesitter/nvim-treesitter",
+    branch = "main",
+    lazy = false,
     event = "BufRead",
     build = ":TSUpdate",
     config = function()
-      require("nvim-treesitter.configs").setup({
-        ensure_installed = "all",
-        highlight = {
-          enable = true,
-          additional_vim_regex_highlighting = { "jack", "haskell" },
-        },
-        indent = { enable = true },
-        -- windwp/nvim-ts-autotag
-        autotag = { enable = true },
-        -- nvim-treesitter-textobjects
-        textobjects = {
-          select = { enable = true },
-        },
+      vim.api.nvim_create_autocmd("FileType", {
+        group = vim.api.nvim_create_augroup("vim-treesitter-start", {}),
+        callback = function()
+          pcall(vim.treesitter.start)
+        end,
       })
     end,
-  },
-  {
-    "nvim-treesitter/nvim-treesitter-textobjects",
-    event = "InsertEnter",
-    dependencies = "nvim-treesitter/nvim-treesitter",
   },
   {
     "JoosepAlviste/nvim-ts-context-commentstring",

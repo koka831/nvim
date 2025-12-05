@@ -1,10 +1,6 @@
 --- Keybinds for LSP are also configured in `keymap.lua`.
-local lspconfig = require("lspconfig")
+local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-require("mason-lspconfig").setup({})
-
-local c = vim.lsp.protocol.make_client_capabilities()
-local capabilities = require("cmp_nvim_lsp").default_capabilities(c)
 vim.lsp.config("*", {
   capabilities = capabilities,
 })
@@ -16,12 +12,12 @@ vim.lsp.config("lua_ls", {
         globals = { "vim" },
       },
       workspace = {
+        -- enable autocomplete for Neovim runtime files
         library = vim.list_extend(vim.api.nvim_get_runtime_file("lua", true), {
           "${3rd}/luv/library",
           "${3rd}/busted/library",
           "${3rd}/luassert/library",
         }),
-        checkThirdParty = "Disable",
       },
       telemetry = { enable = false },
     },
@@ -29,65 +25,41 @@ vim.lsp.config("lua_ls", {
 })
 vim.lsp.enable("lua_ls")
 
-lspconfig.gopls.setup({
-  capabilities = capabilities,
-})
+vim.lsp.enable("gopls")
 
-lspconfig.nil_ls.setup({
-  capabilities = capabilities,
-})
-
-lspconfig.ruby_lsp.setup({
-  capabilities = capabilities,
+vim.lsp.config("ruby_lsp", {
   init_options = {
     formatter = "rubocop",
     linters = { "rubocop", "standard" },
   },
 })
+vim.lsp.enable("ruby_lsp")
 
-lspconfig.hls.setup({
-  capabilities = capabilities,
-  settings = {
-    haskell = {
-      formattingProvider = "fourmolu",
-      cabalFormattingProvider = "cabalfmt",
-    },
-  },
-})
-
--- require `npm install -g @tailwindcss/language-server`
-require("lspconfig").tailwindcss.setup({
-  capabilities = capabilities,
-})
+--- require `npm install -g @tailwindcss/language-server`
+vim.lsp.enable("tailwindcss")
 
 ---@param workspace string path
 ---@return string
 local function python_path(workspace)
   local path = require("lspconfig/util").path
-  if vim.fn.glob(path.join(workspace, "poetry.lock")) ~= "" then
-    local venv = vim.fn.trim(vim.fn.system("poetry env info -p"))
-    return path.join(venv, "bin", "python")
+  if vim.fn.glob(path.join(workspace, "uv.lock")) ~= "" then
+    return vim.fn.trim(vim.fn.system("uv python find"))
   end
 
-  return vim.fn.trim(vim.fn.system("command -v python"))
+  return vim.fn.trim(vim.fn.system("command -v python3"))
 end
 
-lspconfig.pyright.setup({
-  capabilities = capabilities,
-  settings = {
-    python = {
-      venvPath = ".",
-      analysis = { extraPaths = "." },
-    },
-  },
-  on_init = function(client)
-    client.config.settings.python.pythonPath = python_path(client.config.root_dir)
+vim.lsp.config("ts_ls", {
+  on_attach = function(client, _)
+    -- disable formatting, use biome instead
+    client.server_capabilities.documentFormattingProvider = false
   end,
 })
+vim.lsp.enable("ts_ls")
 
----detect which package manager is used in the current JS/TS project
----@return string package_manager one of "pnpm", "yarn" "npm"
-local function node_package_manager()
+---detect which package manager is used in the current project
+---@return string package_manager pnpm|yarn|npm
+local function detect_node_package_manager()
   local cwd = vim.fn.getcwd()
   if vim.fn.filereadable(cwd .. "/pnpm-lock.yaml") == 1 then
     return "pnpm"
@@ -98,45 +70,44 @@ local function node_package_manager()
   end
 end
 
-vim.lsp.config("biome", {
-  cmd = { node_package_manager(), "biome", "lsp-proxy" },
-})
 vim.lsp.enable("biome")
-
-lspconfig.ts_ls.setup({
-  capabilities = capabilities,
-  on_attach = function(client, _)
-    client.server_capabilities.documentFormattingProvider = false
-  end,
-})
-
-lspconfig.ruff.setup({
-  capabilities = capabilities,
-  on_init = function(client)
-    client.config.settings.python.pythonPath = python_path(client.config.root_dir)
-  end,
-})
-
-lspconfig.terraformls.setup({})
-
-lspconfig.rust_analyzer.setup({
-  capabilities = capabilities,
-  on_attach = function(client, bufnr)
-    if client.server_capabilities.inlayHintProvider then
-      vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
-    end
-  end,
+vim.lsp.config("biome", {
   settings = {
+    ["biome"] = {
+      capabilities = capabilities,
+      cmd = { detect_node_package_manager(), "biome", "lsp-proxy" },
+    },
+  },
+})
+
+vim.lsp.config("ruff", {
+  init_options = {
+    settings = {
+      logLevel = "debug",
+    },
+  },
+  -- on_init = function(client)
+  --   client.config.settings.interpreter = python_path(client.config.root_dir)
+  -- end,
+})
+vim.lsp.enable("ruff")
+
+vim.lsp.enable("terraformls")
+
+vim.lsp.config("rust_analyzer", {
+  on_attach = function(_client, bufnr)
+    vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+  end,
+  check = {
+    command = "clippy",
+    extraArgs = { "--all", "--", "-W", "clippy::all" },
+  },
+  settings = {
+    -- see [doc](https://rust-analyzer.github.io/book/configuration.html)
     ["rust-analyzer"] = {
-      check = {
-        extraArgs = { "--target-dir", "target/ra" },
-        -- command = "clippy",
-        -- TODO: enable --target-dir
-        -- extraArgs = { "--all", "--", "-W", "clippy::all", "--target-dir", "target/ra" },
-      },
       inlayHints = {
         renderColons = true,
-        -- expressionAdjustmentHints = { enable = true },
+        expressionAdjustmentHints = { enable = true },
         closingBraceHints = { enable = false },
         parameterHints = { enable = false },
         typeHints = {
@@ -144,14 +115,30 @@ lspconfig.rust_analyzer.setup({
           -- hideNamedConstructor = true,
         },
       },
+      hover = {
+        show = {
+          enumVariants = 10,
+        },
+      },
     },
   },
 })
+vim.lsp.enable("rust_analyzer")
 
 require("flutter-tools").setup({
   fvm = true,
   lsp = {
     capabilities = capabilities,
+    cmd = {
+      "/opt/homebrew/bin/fvm",
+      "dart",
+      "language-server",
+      "--protocol=lsp",
+    },
+    color = {
+      enabled = true,
+      virtual_text = true,
+    },
     settings = {
       lineLength = 120,
     },
@@ -168,7 +155,6 @@ ls.setup({
     -- Shell
     require("none-ls-shellcheck.diagnostics"),
     require("none-ls-shellcheck.code_actions"),
-    builtins.formatting.prettierd,
     -- Lua
     builtins.formatting.stylua,
     builtins.diagnostics.selene,
@@ -188,6 +174,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
   group = vim.api.nvim_create_augroup("DisableLspHighlight", {}),
   callback = function(ev)
     local client = vim.lsp.get_client_by_id(ev.data.client_id)
+    ---@diagnostic disable-next-line: need-check-nil
     client.server_capabilities.semanticTokensProvider = nil
   end,
 })
