@@ -22,7 +22,7 @@ vim.api.nvim_create_autocmd("FileType", {
 return {
   {
     "nvim-telescope/telescope.nvim",
-    tag = "0.1.8",
+    tag = "v0.2.0",
     lazy = true,
     dependencies = {
       "nvim-lua/plenary.nvim",
