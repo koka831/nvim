@@ -4,6 +4,17 @@ local yellow = "#f5a95e"
 local green = "#a8a85f"
 local blue = "#82a884"
 
+---custom components for lualine. show if VENV is active
+-- @return string
+local function lualine_venv_component()
+  local venv = os.getenv("VIRTUAL_ENV") or os.getenv("CONDA_DEFAULT_ENV")
+  if venv ~= nil then
+    return " venv"
+  else
+    return ""
+  end
+end
+
 return {
   {
     "sainnhe/gruvbox-material",
@@ -85,7 +96,13 @@ return {
         },
         sections = {
           lualine_a = { "mode" },
-          lualine_b = { "branch" },
+          lualine_b = {
+            "branch",
+            {
+              lualine_venv_component,
+              color = { fg = "#FFD43B" },
+            },
+          },
           lualine_c = {
             {
               "diff",
