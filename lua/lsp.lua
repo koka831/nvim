@@ -8,6 +8,9 @@ vim.lsp.config("*", {
 vim.lsp.config("lua_ls", {
   settings = {
     Lua = {
+      runtime = {
+        version = "LuaJIT",
+      },
       diagnostics = {
         globals = { "vim" },
       },
@@ -18,6 +21,7 @@ vim.lsp.config("lua_ls", {
           "${3rd}/busted/library",
           "${3rd}/luassert/library",
         }),
+        checkThirdParty = false,
       },
       telemetry = { enable = false },
     },
@@ -42,12 +46,29 @@ vim.lsp.enable("tailwindcss")
 ---@return string
 local function python_path(workspace)
   local path = require("lspconfig/util").path
+
+  if vim.env.VIRTUAL_ENV then
+    return path.join(vim.env.VIRTUAL_ENV, "bin", "python")
+  end
+
   if vim.fn.glob(path.join(workspace, "uv.lock")) ~= "" then
     return vim.fn.trim(vim.fn.system("uv python find"))
   end
 
   return vim.fn.trim(vim.fn.system("command -v python3"))
 end
+
+vim.lsp.config("pyright", {
+  cmd = { ".venv/bin/pyright-langserver", "--stdio" },
+  settings = {
+    python = {
+      analysis = {
+        pythonPath = ".venv/bin/python",
+      },
+    },
+  },
+})
+vim.lsp.enable("pyright")
 
 vim.lsp.config("ts_ls", {
   on_attach = function(client, _)
@@ -86,9 +107,9 @@ vim.lsp.config("ruff", {
       logLevel = "debug",
     },
   },
-  -- on_init = function(client)
-  --   client.config.settings.interpreter = python_path(client.config.root_dir)
-  -- end,
+  on_init = function(client)
+    client.config.settings.interpreter = python_path(client.config.root_dir)
+  end,
 })
 vim.lsp.enable("ruff")
 
